@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:get_storage/get_storage.dart';
+
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:latlong2/latlong.dart';
 import 'package:receive_product/Getx/Drawer/DrawerController.dart';
@@ -21,7 +22,9 @@ import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart
 
 
 void main() async {
- // await GetStorage.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox('userBox');
   Get.put(AuthController(),
 
       permanent: true); // Ensure AuthController is always in memory
