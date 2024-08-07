@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+// import 'package:get_storage/get_storage.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -21,7 +21,7 @@ import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart
 
 
 void main() async {
-  await GetStorage.init();
+ // await GetStorage.init();
   Get.put(AuthController(),
 
       permanent: true); // Ensure AuthController is always in memory
