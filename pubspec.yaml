@@ -21,9 +21,8 @@ dependencies:
   background_location: ^0.13.0
   url_launcher: ^6.0.20
   another_flutter_splash_screen: ^1.2.0
-  sidebarx: ^0.17.1
   get_storage: ^2.1.1
-  flutter_login: ^4.2.1
+
 
 
 dev_dependencies:
