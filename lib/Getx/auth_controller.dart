@@ -230,8 +230,9 @@ class AuthController extends GetxController {
         // وضعیت تأیید درست است
         check = true;
         // اطلاعات کاربر را به روز کنید و به صفحه خانه هدایت کنید (اختیاری)
-        _userBox.put('user', fetchedUserJson); // ذخیره اطلاعات کاربر به جای توکن
-        setUser(user);
+        // _userBox.put('user', fetchedUserJson); // ذخیره اطلاعات کاربر به جای توکن
+        // setUser(user);
+        
         Get.offAllNamed('/home');
       } else {
         Get.snackbar('Error', 'شما مجاز نیست');
