@@ -23,34 +23,19 @@ class User {
     required this.availability,
   });
 
-  // تبدیل نقشه به مدل User
   factory User.fromMap(Map<String, dynamic> map) => User(
     id: map['id'] ?? '',
     username: map['username'] ?? '',
     password: map['password'] ?? '',
-    verified: map['verified'] == 1,
+    verified: map['verified'] ?? false,
     email: map['email'] ?? '',
     name: map['name'] ?? '',
     avatar: map['avatar'] ?? '',
     family: map['family'] ?? '',
-    availability: List<String>.from(jsonDecode(map['availability'] ?? '[]')),
+    availability: List<String>.from(map['availability'] ?? []),
   );
 
-  // تبدیل مدل User به نقشه
   Map<String, dynamic> toMap() => {
-    'id': id,
-    'username': username,
-    'password': password,
-    'verified': verified ? 1 : 0,
-    'email': email,
-    'name': name,
-    'avatar': avatar,
-    'family': family,
-    'availability': jsonEncode(availability),
-  };
-
-  // تبدیل مدل User به JSON
-  Map<String, dynamic> toJson() => {
     'id': id,
     'username': username,
     'password': password,
@@ -63,5 +48,5 @@ class User {
   };
 
   @override
-  String toString() => jsonEncode(toJson());
+  String toString() => jsonEncode(toMap());
 }

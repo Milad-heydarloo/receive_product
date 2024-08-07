@@ -245,13 +245,12 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:receive_product/Getx/DataBase/DatabaseHelper.dart';
 
-import 'user_model.dart';       // وارد کردن مدل User
+import 'user_model.dart'; // وارد کردن مدل User
 
 class AuthController extends GetxController {
   final pb = PocketBase('https://saater.liara.run');
@@ -280,7 +279,7 @@ class AuthController extends GetxController {
   }
 
   void logout() async {
-     clearUser();
+    clearUser();
     Get.offAllNamed('/login');
   }
 
@@ -290,7 +289,7 @@ class AuthController extends GetxController {
       if (user.verified) {
         Get.offAllNamed('/home');
       } else {
-         clearUser();
+        clearUser();
         Get.offAllNamed('/login');
       }
     } else {
@@ -299,24 +298,30 @@ class AuthController extends GetxController {
   }
 
   Future<void> login(String email, String password) async {
+    User? users;
     try {
-      final authData = await pb.collection('users').authWithPassword(email, password);
+      final authData =
+          await pb.collection('users').authWithPassword(email, password);
       final userJson = authData.record!.toJson();
       final user = User.fromMap(userJson);
 
       // اضافه کردن پسورد به اطلاعات کاربر
       user.password = password; // ذخیره کردن پسورد
-
+users=user;
       if (user.verified) {
+        print(user);
         // ذخیره اطلاعات کاربر با پسورد
         await _dbHelper.insertUser(user);
         setUser(user);
         Get.offAllNamed('/home');
       } else {
-        Get.snackbar('مشکل', 'شما مجاز به ورود نیستید', backgroundColor: Colors.red);
+        Get.snackbar('مشکل', 'شما مجاز به ورود نیستید',
+            backgroundColor: Colors.red);
       }
     } catch (e) {
-      Get.snackbar('مشکل', 'ایمیل یا پسورد به درستی وارد نشده', backgroundColor: Colors.red);
+      print(users);
+      Get.snackbar('مشکل', 'ایمیل یا پسورد به درستی وارد نشده',
+          backgroundColor: Colors.red);
     }
   }
 
@@ -330,7 +335,9 @@ class AuthController extends GetxController {
     }
 
     try {
-      final authData = await pb.collection('users').authWithPassword(user.email, user.password);
+      final authData = await pb
+          .collection('users')
+          .authWithPassword(user.email, user.password);
       final fetchedUserJson = authData.record!.toJson();
       final fetchedUser = User.fromMap(fetchedUserJson);
 
@@ -342,10 +349,12 @@ class AuthController extends GetxController {
         setUser(fetchedUser);
         Get.offAllNamed('/home');
       } else {
-        Get.snackbar('Error', 'شما مجاز نیستید');
+        Get.snackbar('مشکل', 'شما مجاز به ورود نیستید',
+            backgroundColor: Colors.red);
       }
     } catch (e) {
-      Get.snackbar('Error', 'Invalid email or password');
+      Get.snackbar('مشکل', 'ایمیل یا پسورد به درستی وارد نشده',
+          backgroundColor: Colors.red);
     }
 
     return check; // در پایان متد، مقدار check برگردانده می‌شود
