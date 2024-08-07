@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+
 
 import 'package:latlong2/latlong.dart';
 import 'package:receive_product/Getx/Drawer/DrawerController.dart';
@@ -22,9 +22,7 @@ import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart
 
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  await Hive.openBox('userBox');
+
   Get.put(AuthController(),
 
       permanent: true); // Ensure AuthController is always in memory
@@ -205,21 +203,26 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
       icon: "@mipmap/ic_launcher",
     );
 
-    BackgroundLocation.getLocationUpdates((location) {
-      final user = authController.getUser();
-      setState(() {
+    // دریافت موقعیت مکانی و به‌روزرسانی آن
+    BackgroundLocation.getLocationUpdates((location) async {
+      final user = await authController.getUser(); // استفاده غیرهمزمان از متد getUser
+      if (user != null) {
         LocationUser updatedLocation = LocationUser(
           id: '5imz3qage0zszam',
-          user: '${user?.username}',
+          user: '${user.username}',
           latitude: location.latitude.toString(),
           longitude: location.longitude.toString(),
         );
-        orderController.updateLocation(updatedLocation);
-      });
+        // اطمینان از به‌روزرسانی وضعیت به‌طور غیرهمزمان
+        await orderController.updateLocation(updatedLocation);
 
-      print("Updated location: ${location.latitude}, ${location.longitude}");
+        print("Updated location: ${location.latitude}, ${location.longitude}");
+      } else {
+        print("User data not available");
+      }
     });
   }
+
 
   @override
   void dispose() {
