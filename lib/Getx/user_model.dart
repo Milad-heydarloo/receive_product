@@ -23,19 +23,19 @@ class User {
     required this.availability,
   });
 
-  factory User.fromMap(Map<String, dynamic> map) => User(
-    id: map['id'] ?? '',
-    username: map['username'] ?? '',
-    password: map['password'] ?? '',
-    verified: map['verified'] ?? false,
-    email: map['email'] ?? '',
-    name: map['name'] ?? '',
-    avatar: map['avatar'] ?? '',
-    family: map['family'] ?? '',
-    availability: List<String>.from(map['availability'] ?? []),
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    id: json['id'] ?? '',
+    username: json['username'] ?? '',
+    password: json['password'] ?? '',
+    verified: json['verified'] ?? false,
+    email: json['email'] ?? '',
+    name: json['name'] ?? '',
+    avatar: json['avatar'] ?? '',
+    family: json['family'] ?? '',
+    availability: List<String>.from(json['availability'] ?? []),
   );
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
     'id': id,
     'username': username,
     'password': password,
@@ -48,5 +48,5 @@ class User {
   };
 
   @override
-  String toString() => jsonEncode(toMap());
+  String toString() => jsonEncode(toJson());
 }

@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
-// import 'package:receive_product/Getx/auth_controller.dart';
+// import 'package:receive_the_product/Getx/auth_controller.dart';
 //
 // class LoginPage extends StatelessWidget {
 //   final emailController = TextEditingController();
@@ -42,7 +42,7 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:receive_product/Getx/auth_controller.dart';
+import 'package:receive_the_product/Getx/auth_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

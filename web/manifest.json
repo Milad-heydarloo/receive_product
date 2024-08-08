@@ -1,11 +1,11 @@
 {
-    "name": "receive_product",
-    "short_name": "receive_product",
+    "name": "receive_the_product_app",
+    "short_name": "receive_the_product_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "https://saaterco.com CRM project of Sater business development system",
+    "description": "https://saaterco.com CRM project of Sater business development system Getting Started",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

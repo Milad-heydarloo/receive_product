@@ -6,14 +6,13 @@ import 'package:get/get.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 
-
 import 'package:latlong2/latlong.dart';
-import 'package:receive_product/Getx/Drawer/DrawerController.dart';
+import 'package:receive_the_product/Getx/Drawer/DrawerController.dart';
 
-import 'package:receive_product/Getx/Drawer/MyDrawer.dart';
-import 'package:receive_product/Getx/auth_controller.dart';
-import 'package:receive_product/Getx/routes.dart';
-import 'package:receive_product/Getx/order.dart';
+import 'package:receive_the_product/Getx/Drawer/MyDrawer.dart';
+import 'package:receive_the_product/Getx/auth_controller.dart';
+import 'package:receive_the_product/Getx/routes.dart';
+import 'package:receive_the_product/Getx/order.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:background_location/background_location.dart';
@@ -22,7 +21,7 @@ import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart
 
 
 void main() async {
-
+  // await GetStorage.init();
   Get.put(AuthController(),
 
       permanent: true); // Ensure AuthController is always in memory
@@ -145,14 +144,9 @@ class _SplashPagesState extends State<SplashPages> {
 
             onEnd: () async {
               await Future.delayed(Duration(seconds: 2));
-              bool user = await authController.checkVerificationStatus();
+               authController.checkAndLogin();
 
-              if (user) {
-                Get.offAllNamed(Routes.home);
-              } else {
-                authController.clearUser();
-                Get.offAllNamed(Routes.login);
-              }
+
 
             },
 
@@ -202,27 +196,22 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
       message: "Your location is being tracked in the background",
       icon: "@mipmap/ic_launcher",
     );
+    final user = await authController.getUser();
+    BackgroundLocation.getLocationUpdates((location) {
 
-    // دریافت موقعیت مکانی و به‌روزرسانی آن
-    BackgroundLocation.getLocationUpdates((location) async {
-      final user = await authController.getUser(); // استفاده غیرهمزمان از متد getUser
-      if (user != null) {
+      setState(() {
         LocationUser updatedLocation = LocationUser(
           id: '5imz3qage0zszam',
-          user: '${user.username}',
+          user: '${user!.username}',
           latitude: location.latitude.toString(),
           longitude: location.longitude.toString(),
         );
-        // اطمینان از به‌روزرسانی وضعیت به‌طور غیرهمزمان
-        await orderController.updateLocation(updatedLocation);
+        orderController.updateLocation(updatedLocation);
+      });
 
-        print("Updated location: ${location.latitude}, ${location.longitude}");
-      } else {
-        print("User data not available");
-      }
+      print("Updated location: ${location.latitude}, ${location.longitude}");
     });
   }
-
 
   @override
   void dispose() {

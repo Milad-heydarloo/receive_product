@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:receive_product/Getx/PagesOrderProduct/PagesOP.dart';
-import 'package:receive_product/Getx/loginpage.dart';
-import 'package:receive_product/Getx/testGetx/profile_page.dart';
-import 'package:receive_product/main.dart';
+import 'package:receive_the_product/Getx/PagesOrderProduct/PagesOP.dart';
+import 'package:receive_the_product/Getx/loginpage.dart';
+// import 'package:receive_the_product/Getx/testGetx/profile_page.dart';
+import 'package:receive_the_product/main.dart';
 
 class Routes {
   static const String home = '/home';

@@ -1,7 +1,8 @@
+//
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
-// import 'package:receive_product/Getx/Drawer/DrawerController.dart';
-// import 'package:receive_product/Getx/auth_controller.dart';
+// import 'package:receive_the_product/Getx/Drawer/DrawerController.dart';
+// import 'package:receive_the_product/Getx/auth_controller.dart';
 //
 // class MyDrawer extends StatelessWidget {
 //   @override
@@ -89,37 +90,35 @@
 //     );
 //   }
 // }
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:receive_product/Getx/Drawer/DrawerController.dart';
-import 'package:receive_product/Getx/auth_controller.dart';
-import 'package:receive_product/Getx/user_model.dart';
+import 'package:receive_the_product/Getx/Drawer/DrawerController.dart';
+import 'package:receive_the_product/Getx/auth_controller.dart';
+import 'package:receive_the_product/Getx/user_model.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthController authController = Get.find<AuthController>();
-    final MyDrawerController drawerController = Get.find<MyDrawerController>(); // Updated controller
+    final MyDrawerController drawerController = Get.find<MyDrawerController>();
 
-    return Drawer(
-      child: Directionality(
-        textDirection: TextDirection.rtl,
-        child: FutureBuilder<User?>(
-          future: authController.getUser(), // Await the user data
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator()); // Show a loading indicator while waiting
-            } else if (snapshot.hasError) {
-              return Center(child: Text('خطا در بارگذاری اطلاعات کاربر'));
-            } else if (!snapshot.hasData) {
-              return Center(child: Text('اطلاعات کاربر یافت نشد'));
-            }
+    return FutureBuilder<User?>(
+      future: authController.getUser(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
 
-            final user = snapshot.data!; // Access the user data
+        final user = snapshot.data;
 
-            return Column(
+        if (user == null) {
+          return Center(child: Text('No user data available'));
+        }
+
+        return Drawer(
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Column(
               children: <Widget>[
                 UserAccountsDrawerHeader(
                   accountName: Text('${user.name} ${user.family}'),
@@ -189,10 +188,10 @@ class MyDrawer extends StatelessWidget {
                       },
                     ))),
               ],
-            );
-          },
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
